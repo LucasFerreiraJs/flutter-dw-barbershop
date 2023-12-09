@@ -20,7 +20,7 @@ class UserLoginServiceImpl implements IUserLoginService {
       case Success(value: final accessToken):
         final sp = await SharedPreferences.getInstance();
         sp.setString(LocalStorageKeys.accessToken, accessToken as String);
-        return Success(nil as Success<Exception, dynamic>);
+        return Success(nil);
 
       case Failure(exception: final exception):
         return switch (exception) {
