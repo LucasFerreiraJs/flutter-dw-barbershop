@@ -29,5 +29,6 @@ sealed class BarbershopTheme {
         ),
       ),
     ),
+    fontFamily: FontContants.fontFamily,
   );
 }

@@ -28,7 +28,18 @@ class LoginPage extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset('assets/images/imgLogo.png'),
+                        Hero(
+                          tag: 'logoImg',
+                          child: AnimatedContainer(
+                            duration: const Duration(seconds: 200),
+                            curve: Curves.linearToEaseOut,
+                            width: 300,
+                            height: 120,
+                            child: Image.asset(
+                              'assets/images/imgLogo.png',
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 24),
                         TextField(
                           decoration: const InputDecoration(
@@ -64,7 +75,7 @@ class LoginPage extends StatelessWidget {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(56)),
                           onPressed: () {},
-                          child: Text('Acessar'),
+                          child: Text('ACESSAR'),
                         )
                       ],
                     ),

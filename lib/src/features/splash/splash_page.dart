@@ -10,6 +10,8 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final heroController = HeroController();
+
   var _scale = 10.0;
   var _animationOpacityLogo = 0.0;
 
@@ -57,14 +59,17 @@ class _SplashPageState extends State<SplashPage> {
                   ),
                   (route) => false);
             },
-            child: AnimatedContainer(
-              duration: const Duration(seconds: 1),
-              curve: Curves.linearToEaseOut,
-              width: _logoAnimationWidth,
-              height: _logoAnimationHeight,
-              child: Image.asset(
-                'assets/images/imgLogo.png',
-                fit: BoxFit.cover,
+            child: Hero(
+              tag: 'logoImg',
+              child: AnimatedContainer(
+                duration: const Duration(seconds: 1),
+                curve: Curves.linearToEaseOut,
+                width: _logoAnimationWidth,
+                height: _logoAnimationHeight,
+                child: Image.asset(
+                  'assets/images/imgLogo.png',
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
