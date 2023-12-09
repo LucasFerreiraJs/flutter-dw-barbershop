@@ -4,13 +4,13 @@ import 'package:dw_barbershop/src/core/exception/auth_exception.dart';
 import 'package:dw_barbershop/src/core/exception/service_exception.dart';
 import 'package:dw_barbershop/src/core/fp/either.dart';
 import 'package:dw_barbershop/src/core/fp/nil.dart';
-import 'package:dw_barbershop/src/repositories/user/user_repository_impl.dart';
+import 'package:dw_barbershop/src/repositories/user/user_repository.dart';
 import 'package:dw_barbershop/src/services/user_login/user_login_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserServiceImpl implements IUserLoginService {
-  final UserRepositoryImpl userRepository;
-  UserServiceImpl({required this.userRepository});
+class UserLoginServiceImpl implements IUserLoginService {
+  final IUserRepository userRepository;
+  UserLoginServiceImpl({required this.userRepository});
 
   @override
   Future<Either<ServiceException, Nil>> execute(String email, String password) async {
