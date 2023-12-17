@@ -7,68 +7,63 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:validatorless/validatorless.dart';
 
-class LoginPage extends ConsumerStatefulWidget {
+final class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
   ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+final class _LoginPageState extends ConsumerState<LoginPage> {
   final formKey = GlobalKey<FormState>();
-  final emailEC = TextEditingController();
-  final passwordEC = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   void dispose() {
-    emailEC.dispose();
-    passwordEC.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // * acesso aos métodos da VM
-    final LoginVm(login: login) = ref.watch(loginVmProvider.notifier);
-    ref.listen(loginVmProvider, (_, state) {
-      switch (state) {
-        case LoginState(status: LoginStateStatus.initial):
-          break;
+    final LoginVm(:login) = ref.watch(loginVmProvider.notifier);
 
-        case LoginState(status: LoginStateStatus.error, errorMessage: final errorMessage?):
-          Messages.showError(errorMessage, context);
-          break;
-
-        case LoginState(status: LoginStateStatus.error):
-          Messages.showError('Erro ao realizar login', context);
-          break;
-
-        case LoginState(status: LoginStateStatus.admLogin):
-          print('adm login');
-          Navigator.of(context).pushNamedAndRemoveUntil('/home/adm', (route) => false);
-          // Messages.showError('Erro ao realizar login', context);
-          break;
-
-        case LoginState(status: LoginStateStatus.employeeLogin):
-          Navigator.of(context).pushNamedAndRemoveUntil('/home/employee', (route) => false);
-          break;
-      }
-    });
+    ref.listen(
+      loginVmProvider,
+      (_, state) {
+        debugPrint('state: ${state.status}');
+        switch (state) {
+          case LoginState(status: ELoginStateStatus.initial):
+            break;
+          case LoginState(status: ELoginStateStatus.error, errorMessage: 'Erro ao realizar login'):
+            Messages.showError('Erro ao realizar login', context);
+          case LoginState(status: ELoginStateStatus.error, errorMessage: 'Erro ao realizar login'):
+            Messages.showError('Erro ao realizar login', context);
+          case LoginState(status: ELoginStateStatus.admLogin):
+            Navigator.of(context).pushNamedAndRemoveUntil('/home/adm', (_) => false);
+          case LoginState(status: ELoginStateStatus.employeeLogin):
+            Navigator.of(context).pushNamedAndRemoveUntil('/home/employee', (_) => false);
+        }
+      },
+    );
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Form(
-        key: formKey,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(ImageConstants.backgroundChairImg),
-              fit: BoxFit.cover,
-              opacity: 0.2,
-            ),
+      resizeToAvoidBottomInset: false,
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(ImageConstants.backgroundChairImg),
+            fit: BoxFit.cover,
+            opacity: 0.2,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(30),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Form(
+            key: formKey,
             child: CustomScrollView(
               slivers: [
                 SliverFillRemaining(
@@ -79,48 +74,43 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Hero(
-                            tag: 'logoImg',
-                            child: AnimatedContainer(
-                              duration: const Duration(seconds: 200),
-                              curve: Curves.linearToEaseOut,
-                              width: 300,
-                              height: 120,
-                              child: Image.asset(ImageConstants.logoImg),
-                            ),
+                          Image.asset(
+                            ImageConstants.logoImg,
+                            width: 150,
+                            height: 170,
                           ),
                           const SizedBox(height: 24),
                           TextFormField(
-                            onTapOutside: (_) => customUnfocus(context),
-                            // onTapOutside: (_) => context.unfocus(),
+                            controller: emailController,
+                            onTapOutside: (_) => context.unfocus(),
+                            keyboardType: TextInputType.emailAddress,
                             validator: Validatorless.multiple([
-                              Validatorless.required('E-mail é obrigatório'),
+                              Validatorless.required('E-mail obrigatório'),
                               Validatorless.email('E-mail inválido'),
                             ]),
-                            controller: emailEC,
                             decoration: const InputDecoration(
                               label: Text('E-mail'),
-                              hintText: 'E-mail',
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
                               labelStyle: TextStyle(color: Colors.black),
+                              hintText: 'E-mail',
                               hintStyle: TextStyle(color: Colors.black),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
                             ),
                           ),
                           const SizedBox(height: 24),
                           TextFormField(
-                            onTapOutside: (_) => customUnfocus(context),
+                            controller: passwordController,
+                            onTapOutside: (_) => context.unfocus(),
                             validator: Validatorless.multiple([
-                              Validatorless.required('Password é obrigatório'),
-                              Validatorless.min(6, 'Mínimo 6 caracteres'),
+                              Validatorless.required('Senha obrigatória'),
+                              Validatorless.min(6, 'Senha inválida'),
                             ]),
                             obscureText: true,
-                            controller: passwordEC,
                             decoration: const InputDecoration(
                               label: Text('Senha'),
-                              hintText: 'Senha',
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
                               labelStyle: TextStyle(color: Colors.black),
+                              hintText: 'Senha',
                               hintStyle: TextStyle(color: Colors.black),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -136,30 +126,33 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ),
                           const SizedBox(height: 24),
                           ElevatedButton(
-                            style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(56)),
-                            onPressed: () {
-                              switch (formKey.currentState?.validate()) {
-                                case (false || null):
-                                  Messages.showError('Campos inválidos', context);
-
-                                  break;
-                                case true:
-                                  login(emailEC.text, passwordEC.text);
-                              }
+                            onPressed: () => switch (formKey.currentState?.validate()) {
+                              (false || null) => Messages.showError('Campos inválidos', context),
+                              true => login(
+                                  emailController.text,
+                                  passwordController.text,
+                                ),
                             },
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size.fromHeight(56),
+                            ),
                             child: const Text('ACESSAR'),
-                          )
+                          ),
                         ],
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/auth/register/user');
-                          },
+                          onTap: () => Navigator.of(context).pushNamed(
+                            '/auth/register/user',
+                          ),
                           child: const Text(
-                            "Criar conta",
-                            style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500),
+                            'Criar conta',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),

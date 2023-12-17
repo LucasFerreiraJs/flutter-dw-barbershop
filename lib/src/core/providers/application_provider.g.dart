@@ -50,7 +50,7 @@ final userLoginServiceProvider = Provider<IUserLoginService>.internal(
 );
 
 typedef UserLoginServiceRef = ProviderRef<IUserLoginService>;
-String _$getMeHash() => r'fbf407e095230102630c8eb19825eeb1563d0efa';
+String _$getMeHash() => r'5649b920fb41abfcf6d0d1a3fdeea9410ae01170';
 
 /// See also [getMe].
 @ProviderFor(getMe)

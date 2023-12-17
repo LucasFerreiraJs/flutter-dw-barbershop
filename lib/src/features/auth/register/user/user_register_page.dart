@@ -33,13 +33,10 @@ class _UserRegisterPageState extends ConsumerState<UserRegisterPage> {
     // Navigator.of(context).pushNamedAndRemoveUntil('/auth/register/barbershop', (route) => false);
 
     ref.listen(userRegisterVmProvider, (_, state) {
-      print('success state ${state}');
       switch (state) {
         case EUserRegisterStateStatus.initial:
           break;
         case EUserRegisterStateStatus.success:
-          print('success ${context}');
-
           Navigator.of(context).pushNamed('/auth/register/barbershop');
 
           break;

@@ -44,7 +44,7 @@ class _BarbershopRegisterPageState extends ConsumerState<BarbershopRegisterPage>
     });
 
     return Scaffold(
-      appBar: AppBar(title: Text('Cadastrar estabelecimento')),
+      appBar: AppBar(title: const Text('Cadastrar estabelecimento')),
       body: Form(
         key: formKey,
         child: Padding(
@@ -77,7 +77,6 @@ class _BarbershopRegisterPageState extends ConsumerState<BarbershopRegisterPage>
                 // const SizedBox(height: 94, child: Placeholder()),
                 WeekDaysPanelWidget(
                   onDayPressed: (value) {
-                    print('selected ${value}');
                     barbershopRegisterVM.addOrRemoveOpenDay(value);
                   },
                 ),
@@ -86,7 +85,6 @@ class _BarbershopRegisterPageState extends ConsumerState<BarbershopRegisterPage>
                   startTime: 6,
                   endTime: 23,
                   onHourPressed: (value) {
-                    print('hora selecionada ${value}');
                     barbershopRegisterVM.addOrRemoveOpeningHour(value);
                   },
                 ),

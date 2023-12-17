@@ -13,6 +13,7 @@ class AuthInterceptor extends Interceptor {
 
     const authHeaderKey = 'Authorization';
     headers.remove(authHeaderKey);
+    headers.remove(HttpHeaders.authorizationHeader);
     if (extra case {'DIO_AUTH_KEY': true}) {
       final sp = await SharedPreferences.getInstance();
       final token = sp.getString(LocalStorageKeys.accessToken);
@@ -29,7 +30,9 @@ class AuthInterceptor extends Interceptor {
 
     if (extra case {'DIO_AUTH_KEY': true}) {
       if (response != null && response.statusCode == HttpStatus.forbidden) {
-        Navigator.of(BarbershopNavGlobalKey.instance.navKey.currentContext!).pushNamedAndRemoveUntil('/auth/login', (route) => false);
+        Navigator.of(
+          BarbershopNavGlobalKey.instance.navKey.currentContext!,
+        ).pushNamedAndRemoveUntil('/auth/login', ((route) => false));
       }
     }
     // loop

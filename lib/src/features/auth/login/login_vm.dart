@@ -22,25 +22,24 @@ class LoginVm extends _$LoginVm {
     switch (result) {
       case Success():
         // invalidar cache
-        ref.invalidate(getMeProvider);
-        ref.invalidate(getMyBarbershopProvider);
+        ref
+          ..invalidate(getMeProvider)
+          ..invalidate(getMyBarbershopProvider);
 
         // * verificar tipo de login;
         final userModel = await ref.read(getMeProvider.future);
         switch (userModel) {
           case UserModelADM():
-            print('login adm');
-            state = state.copyWith(LoginStateStatus.admLogin, () => null);
+            state = state.copyWith(ELoginStateStatus.admLogin, () => null);
 
           case UserModelEmployee():
-            state = state.copyWith(LoginStateStatus.employeeLogin, () => null);
+            state = state.copyWith(ELoginStateStatus.employeeLogin, () => null);
         }
 
       // case Failure(exception: final exception):
       case Failure(exception: ServiceException(message: final message)):
-        state = state.copyWith(LoginStateStatus.error, () => message);
+        state = state.copyWith(ELoginStateStatus.error, () => message);
     }
-    print('loaderHandler.close()');
     loaderHandler.close();
   }
 }

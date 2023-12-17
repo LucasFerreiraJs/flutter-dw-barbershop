@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:dw_barbershop/src/core/constant/local_storage_key.dart';
 import 'package:dw_barbershop/src/core/exception/auth_exception.dart';
 import 'package:dw_barbershop/src/core/exception/service_exception.dart';
@@ -19,7 +18,7 @@ class UserLoginServiceImpl implements IUserLoginService {
     switch (loginResult) {
       case Success(value: final accessToken):
         final sp = await SharedPreferences.getInstance();
-        sp.setString(LocalStorageKeys.accessToken, accessToken as String);
+        sp.setString(LocalStorageKeys.accessToken, accessToken);
         return Success(nil);
 
       case Failure(exception: final exception):

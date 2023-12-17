@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum LoginStateStatus {
+enum ELoginStateStatus {
   initial,
   error,
   admLogin,
@@ -8,16 +8,16 @@ enum LoginStateStatus {
 }
 
 class LoginState {
-  final LoginStateStatus status;
+  final ELoginStateStatus status;
   final String? errorMessage;
 
   // construtor nomeado
-  LoginState.initial() : this(status: LoginStateStatus.initial);
+  LoginState.initial() : this(status: ELoginStateStatus.initial);
 
-  LoginState({required LoginStateStatus this.status, this.errorMessage});
+  LoginState({required ELoginStateStatus this.status, this.errorMessage});
 
   LoginState copyWith(
-    LoginStateStatus? status,
+    ELoginStateStatus? status,
     ValueGetter<String?>? error,
   ) {
     return LoginState(

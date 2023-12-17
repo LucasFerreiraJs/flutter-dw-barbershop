@@ -42,6 +42,7 @@ class UserRepositoryImpl implements IUserRepository {
   Future<Either<RepositoryException, UserModel>> me() async {
     try {
       // final response = await restClient.auth.get('/me');
+
       final Response(:data) = await restClient.auth.get('/me');
       return Success(UserModel.fromMap(data));
     } on DioException catch (e, s) {

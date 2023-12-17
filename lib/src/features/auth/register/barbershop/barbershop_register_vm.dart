@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:dw_barbershop/src/core/fp/either.dart';
 import 'package:dw_barbershop/src/core/providers/application_provider.dart';
 import 'package:dw_barbershop/src/features/auth/register/barbershop/barbershop_register_state.dart';
@@ -8,6 +7,7 @@ part 'barbershop_register_vm.g.dart';
 
 @riverpod
 class BarbershopRegisterVm extends _$BarbershopRegisterVm {
+  @override
   BarbershopRegisterState build() => BarbershopRegisterState.initial();
 
   void addOrRemoveOpenDay(String weekDay) {

@@ -80,7 +80,6 @@ class _TimeButtonWidgetState extends State<TimeButtonWidget> {
         widget.onPressed(widget.value);
         setState(() {
           selected = !selected;
-          print(selected);
         });
       },
       child: Container(

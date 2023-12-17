@@ -25,7 +25,6 @@ IUserLoginService userLoginService(UserLoginServiceRef ref) => UserLoginServiceI
 @Riverpod(keepAlive: true)
 Future<UserModel> getMe(GetMeRef ref) async {
   final response = await ref.watch(userRepositoryProvider).me();
-
   return switch (response) {
     Success(value: final userModel) => userModel,
     Failure(:final exception) => throw exception,

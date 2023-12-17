@@ -1,4 +1,3 @@
-import 'package:asyncstate/asyncstate.dart';
 import 'package:dw_barbershop/src/core/fp/either.dart';
 import 'package:dw_barbershop/src/core/providers/application_provider.dart';
 import 'package:dw_barbershop/src/features/auth/register/user/user_register_provider.dart';
