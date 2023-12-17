@@ -11,7 +11,7 @@ sealed class BarbershopTheme {
     useMaterial3: true,
     appBarTheme: const AppBarTheme(
       centerTitle: true,
-      iconTheme: IconThemeData(color: ColorsConstants.brow),
+      iconTheme: IconThemeData(color: ColorsConstants.brown),
       backgroundColor: Colors.white,
       titleTextStyle: TextStyle(
         fontWeight: FontWeight.w500,
@@ -33,7 +33,7 @@ sealed class BarbershopTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: ColorsConstants.brow,
+        backgroundColor: ColorsConstants.brown,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

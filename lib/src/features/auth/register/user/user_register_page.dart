@@ -1,6 +1,6 @@
 import 'package:dw_barbershop/src/core/ui/helper/form_helper.dart';
 import 'package:dw_barbershop/src/core/ui/helper/message.dart';
-import 'package:dw_barbershop/src/features/auth/register/userregister_vm.dart';
+import 'package:dw_barbershop/src/features/auth/register/user/user_register_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:validatorless/validatorless.dart';
@@ -30,15 +30,22 @@ class _UserRegisterPageState extends ConsumerState<UserRegisterPage> {
   @override
   Widget build(BuildContext context) {
     final userRegisterVm = ref.watch(userRegisterVmProvider.notifier);
+    // Navigator.of(context).pushNamedAndRemoveUntil('/auth/register/barbershop', (route) => false);
 
     ref.listen(userRegisterVmProvider, (_, state) {
+      print('success state ${state}');
       switch (state) {
         case EUserRegisterStateStatus.initial:
           break;
         case EUserRegisterStateStatus.success:
+          print('success ${context}');
+
           Navigator.of(context).pushNamed('/auth/register/barbershop');
+
+          break;
         case EUserRegisterStateStatus.error:
           Messages.showError('Erro ao cadastrar usuário administrador', context);
+          break;
       }
     });
 
@@ -98,12 +105,14 @@ class _UserRegisterPageState extends ConsumerState<UserRegisterPage> {
                     switch (formKey.currentState?.validate()) {
                       case null || false:
                         Messages.showError('Formulário inválido', context);
+                        break;
                       case true:
                         userRegisterVm.register(
                           name: nameEC.text,
                           email: emailEC.text,
                           password: passwordEC.text,
                         );
+                        break;
                     }
                   },
                   child: const Text('CRIAR CONTA'),

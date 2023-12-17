@@ -44,6 +44,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           break;
 
         case LoginState(status: LoginStateStatus.admLogin):
+          print('adm login');
           Navigator.of(context).pushNamedAndRemoveUntil('/home/adm', (route) => false);
           // Messages.showError('Erro ao realizar login', context);
           break;
@@ -128,7 +129,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             child: Text(
                               'Esqueceu a senha?',
                               style: TextStyle(
-                                color: ColorsConstants.brow,
+                                color: ColorsConstants.brown,
                                 fontSize: 12,
                               ),
                             ),
