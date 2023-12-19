@@ -52,6 +52,9 @@ class UserModelADM extends UserModel {
       _ => throw ArgumentError('Invalid json')
     };
   }
+
+  List<String>? get getWorkDays => workDays;
+  List<int>? get getWorkHours => workHours;
 }
 
 class UserModelEmployee extends UserModel {

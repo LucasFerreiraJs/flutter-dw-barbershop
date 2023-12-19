@@ -70,4 +70,20 @@ class UserRepositoryImpl implements IUserRepository {
       return Failure(RepositoryException(message: 'Erro ao registrar usuário admin'));
     }
   }
+
+  @override
+  Future<Either<RepositoryException, List<UserModel>>> getEmployee(int barbershopId) async {
+    try {
+      final Response(:data) = await restClient.auth.get('/users', queryParameters: {'barbershop_id': barbershopId});
+
+      final employess = data.map<UserModelEmployee>((item) => UserModelEmployee.fromMap(item)).toList();
+      return Success(employess);
+    } on DioException catch (e, s) {
+      log('Erro ao buscar colaboradores', error: e, stackTrace: s);
+      return Failure(RepositoryException(message: 'Erro ao buscar colaboradores'));
+    } on ArgumentError catch (e, s) {
+      log('Erro ao converter colaboradores', error: e, stackTrace: s);
+      return Failure(RepositoryException(message: 'Erro ao converter colaboradores'));
+    }
+  }
 }

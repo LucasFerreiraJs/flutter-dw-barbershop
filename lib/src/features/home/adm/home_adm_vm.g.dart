@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_vm.dart';
+part of 'home_adm_vm.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginVmHash() => r'60dca904045e41e7df29936db0f0719839009fec';
+String _$homeAdmVmHash() => r'511ea432a9695d8c3924c856c753d2313dfa1662';
 
-/// See also [LoginVm].
-@ProviderFor(LoginVm)
-final loginVmProvider =
-    AutoDisposeNotifierProvider<LoginVm, LoginState>.internal(
-  LoginVm.new,
-  name: r'loginVmProvider',
+/// See also [HomeAdmVm].
+@ProviderFor(HomeAdmVm)
+final homeAdmVmProvider =
+    AutoDisposeAsyncNotifierProvider<HomeAdmVm, HomeAdmState>.internal(
+  HomeAdmVm.new,
+  name: r'homeAdmVmProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$loginVmHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$homeAdmVmHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LoginVm = AutoDisposeNotifier<LoginState>;
+typedef _$HomeAdmVm = AutoDisposeAsyncNotifier<HomeAdmState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
