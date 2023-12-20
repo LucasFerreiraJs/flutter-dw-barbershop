@@ -2,6 +2,7 @@ import 'package:dw_barbershop/src/core/ui/constants.dart';
 import 'package:flutter/material.dart';
 
 class HoursPanelWidget extends StatelessWidget {
+  final List<int>? enabledTimes;
   final int startTime;
   final int endTime;
   final ValueChanged<int> onHourPressed;
@@ -10,6 +11,7 @@ class HoursPanelWidget extends StatelessWidget {
     required this.onHourPressed,
     required this.startTime,
     required this.endTime,
+    this.enabledTimes,
   });
 
   @override
@@ -18,6 +20,7 @@ class HoursPanelWidget extends StatelessWidget {
     for (var i = startTime; i <= endTime; i++) {
       buttonList.add(
         TimeButtonWidget(
+          enabledTimes: enabledTimes,
           onPressed: onHourPressed,
           value: i,
           label: '${i.toString().padLeft(2, '0')}:00',
@@ -51,6 +54,7 @@ class HoursPanelWidget extends StatelessWidget {
 }
 
 class TimeButtonWidget extends StatefulWidget {
+  final List<int>? enabledTimes;
   final String label;
   final int value;
   final ValueChanged<int> onPressed;
@@ -58,6 +62,7 @@ class TimeButtonWidget extends StatefulWidget {
     required this.label,
     required this.value,
     required this.onPressed,
+    this.enabledTimes,
     super.key,
   });
 
@@ -67,21 +72,29 @@ class TimeButtonWidget extends StatefulWidget {
 
 class _TimeButtonWidgetState extends State<TimeButtonWidget> {
   var selected = false;
-
   @override
   Widget build(BuildContext context) {
     Color textColor = selected ? Colors.white : ColorsConstants.grey;
     Color buttonColor = selected ? ColorsConstants.brown : Colors.white;
     Color buttonBorderColor = selected ? ColorsConstants.brown : ColorsConstants.grey;
 
+    final TimeButtonWidget(:value, :label, :enabledTimes) = widget;
+    final disabledTime = enabledTimes != null && !enabledTimes.contains(value);
+
+    if (disabledTime) {
+      buttonColor = Colors.grey[400]!;
+    }
+
     return InkWell(
       borderRadius: BorderRadius.circular(8),
-      onTap: () {
-        widget.onPressed(widget.value);
-        setState(() {
-          selected = !selected;
-        });
-      },
+      onTap: disabledTime
+          ? null
+          : () {
+              widget.onPressed(widget.value);
+              setState(() {
+                selected = !selected;
+              });
+            },
       child: Container(
           // margin: EdgeInsets.all(3),
           width: 64,
