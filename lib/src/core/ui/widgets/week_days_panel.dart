@@ -65,7 +65,7 @@ class _ButtonDayWidgetState extends State<ButtonDayWidget> {
     Color buttonBorderColor = selected ? ColorsConstants.brown : ColorsConstants.grey;
 
     return Padding(
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.symmetric(horizontal: 7),
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: () {
