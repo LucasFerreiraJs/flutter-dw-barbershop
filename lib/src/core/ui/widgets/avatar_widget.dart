@@ -3,7 +3,9 @@ import 'package:dw_barbershop/src/core/ui/constants.dart';
 import 'package:flutter/material.dart';
 
 class AvatarWidget extends StatelessWidget {
-  const AvatarWidget({super.key});
+  final bool hideUploadButton;
+
+  const AvatarWidget({super.key, this.hideUploadButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +24,22 @@ class AvatarWidget extends StatelessWidget {
           Positioned(
             right: 2,
             bottom: 2,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: ColorsConstants.brown,
-                  width: 3,
+            child: Offstage(
+              offstage: hideUploadButton,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: ColorsConstants.brown,
+                    width: 3,
+                  ),
                 ),
-              ),
-              child: const Icon(
-                BarbershopIcons.addEmployee,
-                color: ColorsConstants.brown,
-                size: 20,
+                child: const Icon(
+                  BarbershopIcons.addEmployee,
+                  color: ColorsConstants.brown,
+                  size: 20,
+                ),
               ),
             ),
           )
