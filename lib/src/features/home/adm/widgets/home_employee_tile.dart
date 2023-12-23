@@ -55,7 +55,7 @@ class HomeEmployeeTile extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/schedule');
+                        Navigator.of(context).pushNamed('/schedule', arguments: employee);
                       },
                       child: const Text('Agendar'),
                     ),
@@ -63,7 +63,9 @@ class HomeEmployeeTile extends StatelessWidget {
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/employee/schedule', arguments: employee);
+                      },
                       child: const Text('Ver agenda'),
                     ),
                     const Icon(BarbershopIcons.penEdit, size: 16, color: ColorsConstants.brown),

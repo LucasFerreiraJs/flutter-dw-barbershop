@@ -6,7 +6,14 @@ import 'package:table_calendar/table_calendar.dart';
 class ScheduleCalendarWidget extends StatefulWidget {
   final VoidCallback cancelPressed;
   final ValueChanged<DateTime> okPressed;
-  const ScheduleCalendarWidget({super.key, required this.cancelPressed, required this.okPressed});
+  final List<String> workDays;
+
+  const ScheduleCalendarWidget({
+    super.key,
+    required this.cancelPressed,
+    required this.okPressed,
+    required this.workDays,
+  });
 
   @override
   State<ScheduleCalendarWidget> createState() => _ScheduleCalendarWidgetState();
@@ -14,6 +21,27 @@ class ScheduleCalendarWidget extends StatefulWidget {
 
 class _ScheduleCalendarWidgetState extends State<ScheduleCalendarWidget> {
   DateTime? selectedDay;
+  late final List<int> weekDaysEnable;
+
+  int convertDay(String weekDay) {
+    return switch (weekDay.toLowerCase()) {
+      'seg' => DateTime.monday,
+      'ter' => DateTime.tuesday,
+      'qua' => DateTime.wednesday,
+      'qui' => DateTime.thursday,
+      'sex' => DateTime.friday,
+      'sab' => DateTime.saturday,
+      'dom' => DateTime.sunday,
+      _ => 0
+    };
+  }
+
+  @override
+  void initState() {
+    weekDaysEnable = widget.workDays.map(convertDay).toList();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +61,9 @@ class _ScheduleCalendarWidgetState extends State<ScheduleCalendarWidget> {
             focusedDay: DateTime.now(),
             firstDay: DateTime.utc(2010, 01, 01),
             lastDay: DateTime.now().add(const Duration(days: 365 * 10)),
+            enabledDayPredicate: (day) {
+              return weekDaysEnable.contains(day.weekday);
+            },
             availableCalendarFormats: const {
               CalendarFormat.month: 'Month',
             },

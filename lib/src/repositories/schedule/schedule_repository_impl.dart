@@ -20,7 +20,7 @@ class ScheduleRepositoryImpl implements IScheduleRepository {
         'barbershop_id': scheduleData.barbershopId,
         'user_id': scheduleData.userId,
         'client_name': scheduleData.clientName,
-        'date': scheduleData.date,
+        'date': scheduleData.date.toString(),
         'time': scheduleData.time,
       });
 
