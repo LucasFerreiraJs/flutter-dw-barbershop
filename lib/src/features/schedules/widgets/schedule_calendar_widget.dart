@@ -1,9 +1,12 @@
 import 'package:dw_barbershop/src/core/ui/constants.dart';
+import 'package:dw_barbershop/src/core/ui/helper/message.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ScheduleCalendarWidget extends StatefulWidget {
-  const ScheduleCalendarWidget({super.key});
+  final VoidCallback cancelPressed;
+  final ValueChanged<DateTime> okPressed;
+  const ScheduleCalendarWidget({super.key, required this.cancelPressed, required this.okPressed});
 
   @override
   State<ScheduleCalendarWidget> createState() => _ScheduleCalendarWidgetState();
@@ -42,7 +45,7 @@ class _ScheduleCalendarWidgetState extends State<ScheduleCalendarWidget> {
               return isSameDay(selectedDay, day);
             },
             calendarStyle: CalendarStyle(
-              selectedDecoration: BoxDecoration(
+              selectedDecoration: const BoxDecoration(
                 color: ColorsConstants.brown,
                 shape: BoxShape.circle,
               ),
@@ -56,8 +59,8 @@ class _ScheduleCalendarWidgetState extends State<ScheduleCalendarWidget> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               TextButton(
-                  onPressed: () {},
-                  child: Text(
+                  onPressed: widget.cancelPressed,
+                  child: const Text(
                     'Cancelar',
                     style: TextStyle(
                       fontSize: 14,
@@ -66,8 +69,14 @@ class _ScheduleCalendarWidgetState extends State<ScheduleCalendarWidget> {
                     ),
                   )),
               TextButton(
-                onPressed: () {},
-                child: Text(
+                onPressed: () {
+                  if (selectedDay == null) {
+                    Messages.showError('Por favor selecione um dia', context);
+                    return;
+                  }
+                  widget.okPressed(selectedDay!);
+                },
+                child: const Text(
                   'Ok',
                   style: TextStyle(
                     fontSize: 14,
